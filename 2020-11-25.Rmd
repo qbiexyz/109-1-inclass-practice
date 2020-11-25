@@ -1,0 +1,111 @@
+---
+title: "課堂練習模版"
+author: "qbie"
+date: "2020-11-25"
+output: output_format
+params:
+  id: "410774205"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Your code
+
+```{r}
+example <- list(
+  name=c("小明","小花","小新","美美"),
+  height=c(175,166,170,160),
+  weight=c(77,NA,60,43),
+  birthday=lubridate::ymd(c("1998-03-11","1999-12-22","1995-08-22","2001-10-10")),
+  hobby=c("美食 旅遊","旅遊 時尚","3C 美食","音樂 旅遊"),
+  residence=c("Taipei","New Taipei","Taichung","Kaohsiung"),
+  allowance=factor(c("0-1000","1001-2000","2000+","1001-2000")),
+  bloodType=c("A","B","B","O")
+)
+```
+```{r}
+tr_example <- purrr::transpose(example)
+str(tr_example)
+```
+
+```{r}
+df_example <- as.data.frame(example)
+```
+
+```{r}
+print(example[c("name","allowance")])
+
+pick_allowanceOver1000 <- example$allowance >= "1001-2000"
+example$name[pick_allowanceOver1000]
+```
+
+```{r}
+with(example,
+     {
+       set_TaipeiMetro <- c("Taipei","New Taipei")
+       pick_fromTaipeiMetro <- residence %in% set_TaipeiMetro # residence not defined
+       name[pick_fromTaipeiMetro] # name not defined
+     }) -> whoAreFromTaipeiMetro
+whoAreFromTaipeiMetro
+```
+```{r}
+x <- c(1,5,8)
+y <- c(5,8)
+
+# x裡的元素值是不是屬於y集合
+x %in% y
+?with
+```
+
+```{r}
+x2 <- c(1,NA,10)
+x2
+is.na(x2)
+```
+```{r}
+print(example[c("name","weight")])
+
+pick_na <- is.na(example$weight)
+example$name[pick_na]
+```
+```{r}
+example[["hobby2"]] <- c("美食", "時尚", "美食", "旅遊")
+
+print(example[c("name", "hobby2")])
+pick_loveFood2 <- example$hobby2 == "美食"
+example$name[pick_loveFood2]
+```
+```{r}
+jsonlite::fromJSON("https://data.ntpc.gov.tw/api/datasets/EDC3AD26-8AE7-4916-A00B-BC6048D19BF8/json") ->
+  garbageRoutes
+```
+
+```{r}
+#  1 用typeof()函數查詢電腦實質上如何看待garbageRoutes。
+typeof(garbageRoutes)  
+#  2 用class()函數查詢電腦把它能進行的操作運算歸屬於哪一類型。
+class(garbageRoutes)
+```
+```{r}
+# 由linename元素判斷垃圾車有幾條路線。
+factor(garbageRoutes$lineName) -> garbageRoutes$lineName
+levels(garbageRoutes$lineName)
+  
+# 由linename創造： 可篩選出下午路線的「要/不要」向量pick_afternoonRoutes。
+pick_afternoonRoutes <-
+  stringr::str_detect(
+    garbageRoutes$lineName,
+    "下午"
+  )
+garbageRoutes$lineName[pick_afternoonRoutes]
+```
+```{r}
+CDC_chatbox <- readr::read_csv("http://od.cdc.gov.tw/pr/CDC_chatbox.csv")
+```
+```{r}
+pick_pneumonia <- stringr::str_detect(CDC_chatbox$Question,"肺炎")
+CDC_chatbox$Question[pick_pneumonia]
+```
+
