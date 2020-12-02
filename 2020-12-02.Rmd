@@ -1,0 +1,80 @@
+---
+title: "課堂練習模版"
+author: "qbie"
+date: "2020-12-02"
+output: output_format
+params:
+  id: "410774205"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Your code
+
+```{r}
+a <- c(Mary=178, Jack=165)
+attr(a, "family") <- "Johnson"
+attributes(a)
+a
+
+b <- c(Ben=170, David=172)
+attr(b, "family") <- "Jenson"
+attributes(b)
+
+a_b <- c(a, b)
+attributes(a_b)
+```
+
+```{r}
+library(stringr)
+library(glue)
+```
+
+```{r}
+thatsAlright <- 
+  jsonlite::fromJSON(
+    "https://www.dropbox.com/s/f3ox7rd5favr0o0/thatsAlright.json?dl=1"
+  )
+```
+
+```{r}
+View(thatsAlright)
+```
+
+```{r}
+# 字串向量長度
+length(c("I will"))
+# 每個元素值有幾個字元(包含符號與空格)
+str_length(c("I will"))
+```
+```{r}
+# 字串向量長度
+length(thatsAlright)
+# 每個元素值有幾個字元
+str_length(thatsAlright)
+```
+```{r}
+line67 <- thatsAlright[c(6,7)]
+line67
+```
+```{r}
+str_split(line67, ",")
+```
+```{r}
+pattern="you" 
+```
+
+```{r}
+# 'you'是否出現在第1,2,3,...最後一句
+pick_you <- str_detect(thatsAlright, pattern="you")
+str_view_all(thatsAlright[pick_you],"you")
+```
+
+```{r}
+redline_100px <- rep("red",100)
+as.raster(redline_100px) -> redline_100px
+plot(redline_100px)
+```
+
