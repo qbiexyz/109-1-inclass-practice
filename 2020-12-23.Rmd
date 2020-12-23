@@ -1,0 +1,54 @@
+---
+title: "課堂練習模版"
+author: "qbie"
+date: "2020-12-23"
+output: output_format
+params:
+  id: "410774205"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Your code
+
+```{r}
+# Given some information
+R <- 0.09
+M <- 10000
+T <- 3
+# What I need to do
+PDV <- 
+{
+  M/(1+R)**T
+}
+```
+
+```{r}
+getPDV <- function(R,M,T) 
+{
+  M/(1+R)**T
+}
+```
+
+```{r}
+demandFun <- function(P) 5-3*P
+supplyFun <- function(P) 1+0.5*P
+market <- list(
+  demand=demandFun,
+  supply=supplyFun
+)
+```
+
+```{r}
+df0 <- function(f){
+  epsilon <- 0.00001
+  (f(epsilon)-f(0))/epsilon
+}
+# 查詢函數formals arguments要求
+formals(df0)
+df0(market$demand)
+df0(market$supply)
+```
+
